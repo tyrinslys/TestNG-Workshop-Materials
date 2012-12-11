@@ -8,9 +8,9 @@ You don't need to download or install git to use this resource. Just click the "
 
 ##Downloads##
 
-You will need to do the following inpreperation for the workshop:
+You will need to do the following in preperation for the workshop:
 * [Eclipse] [Eclipse] Note: I advise downloading the [Indigo] [Indigo] version of Eclipse as Juno has [issues being slow] [Slowness]
-* [Java Development Kit] [JDK] Note: if you plan to use your IBM computer you should download the appropiate JDK from JIM.
+* [Java Development Kit] [JDK] Note: if you plan to use your IBM computer you should download the appropriate JDK from JIM.
 * [TestNG] [TestNG] jar file
 * [Hamcrest] [Hamcrest] jar file
 
@@ -22,7 +22,9 @@ You will need to do the following inpreperation for the workshop:
 [TestNG]: http://testng.org/ "TestNG version 6.8"
 [Hamcrest]: http://hamcrest.org/JavaHamcrest/ "Hamcrest for Java"
 
+##Install the TestNG plugin for Eclipse##
+From the Eclipse "Help" menu use the marketplace to install the TestNG plugin. This plugin is called "TestNG for Eclipse"
+
 ##Project Setup##
 We will cover project setup in class. If you are not familiar with how to do this then please visit [this tutorial] [BeginningEclipse] which will show you the basics. The tutorial is for a version from a few years back but the concepts are the same.
 [BeginningEclipse]: http://eclipsetutorial.sourceforge.net/totalbegginer01/lesson01.html "An Eclipse tutorial for total beginners."
-

@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>CSS Layout Techniques</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+			<section>
+				<section >
+<h1 style="font-size: 2.5em">TestNG-Workshop-Materials</h1>
+				</section>
+				<section data-markdown>
+				<script type="text/template">
+##You will have to...##
+Do the following to start this workshop.
+				</script>
+				</section>
+				<section data-markdown>
+				<script type="text/template">
+##Downloads##
+
+You will need to download the following in preperation for the workshop:
+
+* [Eclipse] [Eclipse] Note: I advise downloading the [Indigo] [Indigo] version of Eclipse as Juno has [issues being slow] [Slowness]
+* [Java Development Kit] [JDK] Note: if you plan to use your IBM computer you should download the appropriate JDK from JIM.
+* [TestNG] [TestNG] jar file
+* [Hamcrest] [Hamcrest] jar file
+
+
+[Eclipse]: http://www.eclipse.org "The Eclipse Foundation"
+[JDK]:  http://w3.hursley.ibm.com/java/jim/jim/index.html "IBM Internal JIM home page"
+[Indigo]: http://www.eclipse.org/downloads/packages/release/indigo/sr2 "The Eclipse Indigo version"
+[SlowNess]: http://stackoverflow.com/questions/13072532/slowness-in-eclipse-juno-4-2 "A stackoverflow question on the slowness of Eclipse Juno"
+[TestNG]: http://testng.org/ "TestNG version 6.8"
+[Hamcrest]: http://hamcrest.org/JavaHamcrest/ "Hamcrest for Java"
+				</script>
+				</section>
+				<section data-markdown>
+				<script type="text/template">
+##Install the TestNG plugin for Eclipse##
+From the Eclipse "Help" menu use the marketplace to install the TestNG plugin. This plugin is called "TestNG for Eclipse"
+				</script>
+				</section>
+				<section data-markdown>
+				<script type="text/template">
+##Project Setup##
+We will cover project setup in class. If you are not familiar with how to do this then please visit [this tutorial] [BeginningEclipse] which will show you the basics. The tutorial is for a version from a few years back but the concepts are the same.
+[BeginningEclipse]: http://eclipsetutorial.sourceforge.net/totalbegginer01/lesson01.html "An Eclipse tutorial for total beginners."
+				</script>
+				</section>
+				<section data-markdown>
+				<script type="text/template">
+##Testing your environment
+To see if you are good to go for the class...
+
+ 1. load up Eclipse
+ 1. Make a new project
+ 1. copy/load in code for this workshop
+ 1. open org.java.workshop.SetupTest located  
+at /[project name]/src/test/org/java/workshop/SetupTest.java
+ 1. rightclick in that file
+ 1. select runAs
+ 1. then select TestNG test
+
+If you are good to go then this will run and pass with no problems. If not you have more setup to do.
+				</script>
+				</section>
+			</section>
+
+				<section>
+
+						<h3>Link</h3>
+						<p>We're @ http://www.ibminteractive.com/v3/MDC/class3/</p>
+						<p>Class Files: <a href="https://github.com/tyrinslys/TestNG-Workshop-Materials/archive/master.zip">https://github.com/tyrinslys/TestNG-Workshop-Materials/archive/master.zip</a></p>
+				</section>
+				<section>
+					<section>
+						<h1>Lesson 1</h1>
+					</section>
+					<section data-markdown>
+					<script type="text/template">
+		## So How Do I Create A Test?
+
+		    @Test
+		    public void soHowDoICreateATest() {
+		        // Really this is all you need!
+		    }
+	</script>
+					</section>
+					<section data-markdown>
+					<script type="text/template">
+	## Ok lets actually write a test.
+	But as long as there is no exception then the test passes.
+	
+	    @Test
+	    public void wellNo_YouShouldProbablyActuallyWriteATest() {
+	        String expectedString = "This is my 1 true expected string.";
+	        StringBuilder testStringBuilder = new StringBuilder();
+	        testStringBuilder.append("This");
+	        testStringBuilder.append(' ');
+	        testStringBuilder.append("is my ");
+	        testStringBuilder.append(1);
+	        testStringBuilder.append(' ');
+	        testStringBuilder.append(true);
+	        char[] lastPart = new char[] { ' ', 'e', 'x', 'p', 'e', 'c', 't', 'e', 'd', ' ', 's', 't', 'r', 'i', 'n', 'g',
+	                '.' };
+	        testStringBuilder.append(lastPart);
+	
+	        String testString = testStringBuilder.toString();
+	        Assert.assertEquals(testString, expectedString);
+	    }
+	</script>
+					</section>
+					<section data-markdown>
+					<script type="text/template">
+		## So what happens when it fails?
+	
+	    @Test
+	    public void thatIsGreat_itPassed_butWhatIfItFails() {
+	        String expectedString = "This String is the expected String.";
+	        String testString = "This String is the test String.";
+	        Assert.assertEquals(testString, expectedString);
+	        // explain import static ... so we don't have to keep typing
+	        // Assert.assert... that is annoying.
+	    }
+	</script>
+					</section>
+					<section data-markdown>
+					<script type="text/template">
+	## Enter Hamcrest
+
+	    @Test
+	    public void okayThatIsGreat_butWeCanDoBetter() {
+	        String expectedString = "This String is the expected String.";
+	        String testString = "This String is the test String.";
+	        assertThat(testString, equalTo(expectedString));
+	        // The static method 'assertThat' is in the MatcherAssert class of
+	        // Hamcrest.
+	        // The static method 'equalTo' is in the Matchers static class of
+	        // Hamcrest.
+	    }
+	</script>
+					</section>
+					<section data-markdown>
+					<script type="text/template">
+	## Candy
+
+	    @Test
+	    public void andDontForgetTheCandy() {
+	        String expectedString = "Okay we need someting that is the same.";
+	        String testString = "Okay we need someting that is the same.";
+	        assertThat(testString, equalTo(expectedString));
+	        assertThat(testString, is(expectedString));
+	        assertThat(testString, is(equalTo(expectedString)));
+	        // These are all functionally equivalent. Readability is key!
+	    }
+	</script>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Lesson 2</h1>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##You can perform setup
+once before a test class runs
+
+    private static Queue<String> checkSteps = new LinkedList<String>();
+    {
+        checkSteps.add("@BeforeClass");
+        addMethodStrings();
+        addMethodStrings();
+        addMethodStrings();
+        checkSteps.add("@AfterClass");
+    }
+
+    private static void addMethodStrings() {
+        checkSteps.add("@BeforeMethod");
+        checkSteps.add("In Method");
+        checkSteps.add("@AfterMethod");
+    }
+
+    @BeforeClass
+    public void thisWillRunBeforeAnyTestMethodInThisClass() {
+        String expected = "@BeforeClass";
+        String testString = checkSteps.poll();
+        assertThat(testString, is(equalTo(expected)));
+    }
+
+    @Test
+    public void needsMoreSetup() {
+        String expected = "In Method";
+        String testString = checkSteps.poll();
+        assertThat(testString, is(equalTo(expected)));
+    }
+
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##You can perform teardown
+after all of the methods in the class have run.
+
+    @AfterClass
+    public void thisWillRunAfterAllOfTheMethodsInThisClass() {
+        String expected = "@AfterClass";
+        String testString = checkSteps.poll();
+        assertThat(testString, is(equalTo(expected)));
+        assertThat(checkSteps, is(empty()));
+    }
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##Setup Before each test method
+runs in the class ( and teardown too).
+
+    @BeforeMethod
+    public void thisWillRunBeforeEachMethodInThisClass() {
+        String expected = "@BeforeMethod";
+        String testString = checkSteps.poll();
+        assertThat(testString, is(equalTo(expected)));
+    }
+
+    @AfterMethod
+    public void thisWillRunAfterEachMethodInThisClass() {
+        String expected = "@AfterMethod";
+        String testString = checkSteps.poll();
+        assertThat(testString, is(equalTo(expected)));
+    }
+
+    @Test
+    public void okayCanIRunATestBeforeEachMethod() {
+        String expected = "In Method";
+        String testString = checkSteps.poll();
+        assertThat(testString, is(equalTo(expected)));
+    }
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##What if the setup fails?
+
+    @Test
+    public void whatIfABeforeOrAfterFails() {
+        String expected = "In Method";
+        // comment out the poll to find out
+        String testString = checkSteps.poll();
+        assertThat(testString, is(equalTo(expected)));
+    }
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##setup and teardown
+Full list of before and after places
+
+ * @BeforeSuite
+ * @AfterSuite
+ * @BeforeTest
+ * @AfterTest
+ * @BeforeGroups
+ * @AfterGroups
+ * @BeforeClass
+ * @AfterClass
+ * @BeforeMethod
+ * @AfterMethod
+						</script>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Lesson 3</h1>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##Groups make life easy
+
+    @Test(groups = "integration")
+    public void itOnlyGetsBetterFromHereWithGroups() {
+        passingTest();
+    }
+
+    @Test(groups = "unit")
+    public void thisIsAnotherGroup() {
+        passingTest();
+    }
+
+    private void passingTest() {
+        assertThat(true, is(true));
+    }
+
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##Dependencies can speed up failures
+
+    @Test(groups = "unit")
+    public void thisTestWillFail() {
+        failingTest();
+    }
+
+    @Test(dependsOnGroups = "unit")
+    // @Test(dependsOnGroups = { "unit", "integration" })
+    public void thisTestWillBeSkipped() {
+        // doesn't matter what you put in here. This test is skipped. Because a
+        // dependency failed.
+    }
+
+    private void failingTest() {
+        assertThat(false, is(true));
+    }
+
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##You can depend on more than groups.
+
+    @Test(dependsOnMethods = "thisTestWillFail")
+    public void thisTestwillAlsoBeSkipped() {
+        // other methods can be dependencies.
+    }
+    // Advanced users lookup how to use data providers :)
+						</script>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Lesson 4</h1>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##Hamcrest makes it easy read tests
+Especially when those tests cover ranges or other requirements that are not testing equality.
+
+    @Test(invocationCount = 100)
+    public void okayBackToHamcrest_equalsIsTooEasy() {
+        Random random = new Random();
+        int randomBetween0And99 = random.nextInt(100);
+        assertThat(randomBetween0And99, is(lessThan(100)));
+    }
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+## Why is this better?
+Than an
+
+    assertTrue(test >= expected)
+
+I can read that just fine.
+
+    @Test
+    public void whatElseCanWeTestFor() {
+        assertThat(40, is(greaterThanOrEqualTo(40)));
+    }
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##Glorious Arryas
+
+    @Test
+    public void ArraysAreNotOffLimits() {
+        String[] testStringArray = new String[] { "First", "Second word", "3rd" };
+        String[] expectedStringArray = new String[] { "First", "Second word", "3rd" };
+
+        assertThat(testStringArray, arrayContaining(expectedStringArray));
+    }
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##Hamcrest and Strings
+
+    @Test
+    public void moreFunWithStrings() {
+        assertThat("What the heck, you can do that?",
+                allOf(containsString("can do"), startsWith("What"), endsWith("that?")));
+    }
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##More on wildcards
+
+    @Test(invocationCount = 1000)
+    public void funWithWildCards() {
+        Random random = new Random();
+        int randomInt = random.nextInt();
+        assertThat(randomInt, anyOf(lessThan(0), is(equalTo(0)), greaterThan(0)));
+        // I pretty much covered everything right?
+    }
+						</script>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Lesson 5</h1>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##Collections yeah!
+
+    private Collection<String> testCollection = new ArrayList<String>();
+
+    @BeforeClass
+    public void setupCollection() {
+        testCollection.add("one");
+        testCollection.add("two");
+        testCollection.add("three");
+        testCollection.add("four");
+        testCollection.add("five");
+        testCollection.add("six");
+    }
+
+    @Test
+    public void funWithCollections() {
+        // must be in order
+        assertThat(testCollection, contains("one", "two", "three", "four", "five", "six"));
+        // can be in any order
+        assertThat(testCollection, containsInAnyOrder("five", "one", "three", "four", "six", "two"));
+    }
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##When you only need to test a few.
+
+    @Test
+    public void butMyCollectionIsHugeAndIOnlyCareThatAFewValuesAreInIt() {
+        assertThat(testCollection, allOf(hasItem("one"), hasItem("six")));
+    }
+
+    }
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##Maps are also fun to test
+in Hamcrest.
+
+    private static Map<String, Integer> testMap = new HashMap<String, Integer>();
+    {
+        testMap.put("one", 1);
+        testMap.put("two", 2);
+        testMap.put("three", 3);
+    }
+
+    @Test
+    public void canWeTestMapsAsWell() {
+        assertThat(testMap, hasEntry("one", 1));
+						</script>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Lesson 6</h1>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##Beans!
+You can test Java Bean objects even if they don't override equals.
+
+    public class Plant {
+        String name;
+        Color color;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Color getColor() {
+            return color;
+        }
+
+        public void setColor(Color color) {
+            this.color = color;
+        }
+    }
+
+    @Test
+    public void okayIHaveACustomBeanObjectWhatCanYouDoForMe() {
+        Plant testPlant = new Plant();
+        testPlant.setColor(new Color(123456));
+        testPlant.setName("Treefoil");
+
+        assertThat(
+                testPlant,
+                allOf(hasProperty("name", is(equalTo("Treefoil"))),
+                        hasProperty("color", is(equalTo(new Color(123456))))));
+    }
+
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##Nested Bean properties.
+
+    @Test
+    public void canYouNestMoreThanOnce() {
+        Plant testPlant = new Plant();
+        testPlant.setColor(new Color(123456));
+        testPlant.setName("Treefoil");
+
+        assertThat(
+                testPlant,
+                allOf(hasProperty("name", is(equalTo("Treefoil"))),
+                        hasProperty("color",
+                                allOf(hasProperty("blue", is(equalTo(64))), hasProperty("green", is(equalTo(226)))))));
+    }
+						</script>
+					</section>
+				</section>
+
+
+				<section>
+					<img src="High-Res-Stop-Sign-final.png" style="margin:0;background:none;border:0;box-shadow:0 0 0;width:40%;" alt="" />
+					<p>You are entering a construction zone.</p>
+				</section>
+
+				<section>
+					<section>
+						<h1>Now comes the hard part</h1>
+						We are now going to the freeform part of the class where you write your own tests to test a few objects that I put together for the class.
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+## Starting out
+I have setup the first test for you in the class `BurgerFactoryTestStart`  
+Use what you have learned to test that the burger is built properly.  
+
+
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##Don't copy this code!
+It is already in the org.java.workshop.BurgerFactoryTestStart file. But I wanted to talk about this test before you get started.
+
+    @Test
+    public void testNoOnions() {
+        BurgerOrder noOnionsOrder = new BurgerOrder();
+        noOnionsOrder.addWithout(ingredientList.get("Onions"));
+        Burger testBurger = burgerFactory.createBurger(noOnionsOrder);
+        assertThat(testBurger, hasProperty("stackOfIngredients", not(hasItem(hasProperty("name", equalTo("Onions"))))));
+    }
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+##Have fun!
+I will be walking around to help anyone who bothers me. So if you have trouble call on me for help.
+
+						</script>
+					</section>				</section>
+
+				<section>
+					<h1>THE END</h1>
+					<p style="margin-top:1em;">
+						<small style="line-height:41px;">Presented by the <img src="logo_mcr.png" alt="" style="display:inline;width:99px;margin:0;background:none;border:0;box-shadow:0 0 0;" / > team at the MDC</small>
+					</p>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

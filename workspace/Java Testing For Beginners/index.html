@@ -104,6 +104,124 @@ If you are good to go then this will run and pass with no problems. If not you h
 				</section>
 				<section>
 					<section>
+						<h1>Really small intro <br>to testing</h1>
+					</section>
+					<section data-markdown>
+					<script type="text/template">
+##So what is it good  
+##for anyway?
+We will answer that later.  
+	</script>
+					</section>
+					<section data-markdown>
+					<script type="text/template">
+##Oh what the boss wants.
+First lets consider the following scenario:  
+You boss wants you to create a filter class that reads strings in one 
+line at a time and remove all of the surrounding parentheses.  
+So a line like -  
+`testing (something)` 
+
+becomes -  
+`testing something`  
+
+	</script>
+					</section>
+					<section data-markdown>
+					<script type="text/template">
+##Is that all?
+No problem you say. That can be taken care of in a short bit of code. 
+Why can't you give me something harder.
+
+    public class myFilter {
+        public String filterLine(String lineOfText){
+            String returnString = lineOfText.replace("(", "");
+            returnString = returnString.replace(")", "");
+            return returnString;
+        }
+    }
+	</script>
+					</section>
+					<section data-markdown>
+					<script type="text/template">
+##Later you boss comes to you to say.
+> Well maybe we didn't want all of the parentheses removed. I would like you to change it to only remove them if there are no surrounding double quotes.
+
+`testing (something) and "(something else)"`  
+becomes  
+`testing something and "(something else)"`
+					</script>
+					</section>
+					<section data-markdown>
+					<script type="text/template">
+##Okay no problem.
+
+    public class myFilter {
+        public String filterLine(String lineOfText){
+            StringBuilder returnString  = new StringBuilder();
+            StringTokenizer stringTokenizer =
+                new StringTokenizer(str, '\"');
+            boolean inQuotes = false;
+            while(stringTokenizer.hasMoreElements()){
+                if(inQuotes){
+                    stringBuilder.append(stringTokenizer.nextElement());
+                    inQuotes = false;
+                } else{
+                    String nonQuoteString =
+                        stringTokenizer.nextElement().replace("(", "");
+                    stringBuilder.append(nonQuoteString.replace(")", ""));
+                    inQuotes = true;
+                }
+            }
+        }
+    }
+					</script>
+					</section>
+					<section data-markdown>
+					<script type="text/template">
+##Surprise surprise...
+Your boss is back again and wants to make more changes.
+
+This time he wants you to replace double quotes for single quotes when in a parentheses, that is in a double quote.
+
+`(something) and "(something "else")"`  
+becomes  
+`something and "(something 'else')"`
+					</script>
+					</section>
+					<section data-markdown>
+					<script type="text/template">
+##This next example is too big to fit!
+Scroll back and you will see that with just the first change the code seemed to double. With each new request we get more complexity.
+
+Here are some other things we have to deal with:
+
+1. Passing Time (Forgetful coders)
+1. changing requirements
+1. Bugs introduced in with changes
+1. Unclear requirements
+					</script>
+					</section>
+					<section data-markdown>
+					<script type="text/template">
+##The answer we have all been waiting for...
+Unit Testing helps with the things on the previous slide.
+
+* tests break right away
+* clear understanding of requirements
+* regression testing is a cinch
+* code becomes easier to change
+					</script>
+					</section>
+					<section data-markdown>
+					<script type="text/template">
+##But what about mocking out objects?
+That is part of testing too, but we don't have the time to cover it.
+					</script>
+					</section>
+				</section>
+				<section>
+					<section>
 						<h1>Lesson 1</h1>
 					</section>
 					<section data-markdown>
@@ -593,6 +711,11 @@ It is already in the org.java.workshop.BurgerFactoryTestStart file. But I wanted
 ##Have fun!
 I will be walking around to help anyone who bothers me. So if you have trouble call on me for help.
 
+
+You may work in groups, and I would like you to e-mail me your results by beginning of next week (23rd)  
+`tvalinl@us.ibm.com`
+
+I will compile/compress/post them with the other class material.
 						</script>
 					</section>				</section>
 
